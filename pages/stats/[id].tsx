@@ -11,8 +11,8 @@ import {
   Flex,
   Link,
 } from "@chakra-ui/react";
-import Logo from "../components/utils/Logo";
-import { SwitchThemeButton } from "../components/utils/SwitchTheme";
+import Logo from "../../components/utils/Logo";
+import { SwitchThemeButton } from "../../components/utils/SwitchTheme";
 
 const Home: NextPage = () => {
   const [value, setValue] = useState<string>("");
@@ -26,17 +26,10 @@ const Home: NextPage = () => {
   // };
 
   const onClickSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    window.location.href = `/stats/${value}`;
     // https://api.github.com/users/akshat2602/repos
     // var url: string = `https://api.github.com/users/${value}/repos`;
     // var res: object = await (await fetch(url)).json();
     // console.log(res);
-  };
-  const onPressSubmit = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "Enter") {
-      console.log("HERE");
-      window.location.href = `/stats/${value}`;
-    }
   };
 
   return (
@@ -51,46 +44,18 @@ const Home: NextPage = () => {
       </Head>
       <Box>
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-          <GridItem w="100%" h="50" />
+          <GridItem w="100%" h="40" />
         </Grid>
       </Box>
       <Box>
         <Grid templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={2} />
           <GridItem colSpan={8}>
-            <Logo />
             <Text fontSize="3xl" align={"center"}>
-              Get stats for your GitHub profile!
+              Hello!
             </Text>
           </GridItem>
           <GridItem colSpan={2} />
-        </Grid>
-      </Box>
-      <Box>
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-          <GridItem w="100%" h="50" />
-        </Grid>
-        <Grid templateColumns={"repeat(12,1fr)"}>
-          <GridItem colSpan={3} />
-          <GridItem colSpan={6}>
-            <Flex>
-              <Input
-                value={value}
-                onChange={handleChange}
-                placeholder="Enter your GitHub username here!"
-              />
-              <Button
-                colorScheme="blue"
-                variant="outline"
-                marginLeft={"1%"}
-                onKeyDown={onPressSubmit}
-                onClick={onClickSubmit}
-              >
-                Submit
-              </Button>
-            </Flex>
-          </GridItem>
-          <GridItem colSpan={3} />
         </Grid>
       </Box>
       <Box>
