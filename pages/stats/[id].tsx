@@ -1,6 +1,14 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Text,
+  Link,
+  Image,
+  Center,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { SwitchThemeButton } from "../../components/utils/SwitchTheme";
 import Layout from "../../components/Layout";
@@ -21,8 +29,15 @@ interface GitHubResponse {
   forks: number;
 }
 
+interface GitHubErrorInterface {
+  message: string;
+}
+
+type UnionType = [GitHubResponse] & GitHubErrorInterface;
+
 const StatPage: NextPage = () => {
   const [userData, setUserData] = useState<[GitHubResponse] | []>([]);
+  const [isError, setIsError] = useState<true | false>(false);
 
   const router = useRouter();
   const { id } = router.query;
@@ -31,12 +46,17 @@ const StatPage: NextPage = () => {
     if (id !== undefined) {
       let url: string = `https://api.github.com/users/${id}/repos`;
       fetch(url)
-        .then((res) =>
-          res.json().then((res: [GitHubResponse]) => {
+        .then((res) => res.json())
+        .then((res: UnionType) => {
+          if (res?.message) {
+            setIsError(true);
+            return;
+          } else {
             setUserData(res);
-          })
-        )
+          }
+        })
         .catch((err) => {
+          setIsError(true);
           console.error(err);
         });
     }
@@ -45,15 +65,39 @@ const StatPage: NextPage = () => {
   return (
     <Box bg="dark.700">
       <Layout />
-      <Box marginTop={"3%"}>
-        <Grid templateColumns={"repeat(12,1fr)"}>
-          <GridItem colSpan={2} />
-          <GridItem colSpan={8}>
-            <UserStat user={userData[0]?.owner.login} />
-          </GridItem>
-          <GridItem colSpan={2} />
-        </Grid>
-      </Box>
+      {!isError && (
+        <Box marginTop={"3%"}>
+          <Grid templateColumns={"repeat(12,1fr)"}>
+            <GridItem colSpan={3} />
+            <GridItem colSpan={6}>
+              <UserStat user={userData[0]?.owner.login} />
+            </GridItem>
+            <GridItem colSpan={3} />
+          </Grid>
+        </Box>
+      )}
+      {isError && (
+        <Box marginTop={"6%"}>
+          <Grid templateColumns={"repeat(12,1fr)"}>
+            <GridItem colSpan={3} />
+            <GridItem colSpan={6}>
+              <Text fontSize="3xl" align={"center"}>
+                User not Found!
+              </Text>
+              <Center>
+                <Image
+                  src={"https://http.cat/404"}
+                  alt="404 - Page Not Found"
+                />
+              </Center>
+              <Text fontSize="xl" align={"center"} color={"blue.500"}>
+                <Link href="/">Return To Home</Link>
+              </Text>
+            </GridItem>
+            <GridItem colSpan={3} />
+          </Grid>
+        </Box>
+      )}
       <Box marginTop={"2%"}>
         <Grid templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={3} />

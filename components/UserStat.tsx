@@ -62,7 +62,7 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
           <br />
           <Text fontSize={"2xl"}>{userData?.name}</Text>
           <Link href={userData?.html_url} isExternal>
-            <Tag size="lg" colorScheme="pink" borderRadius="full">
+            <Tag size="lg" colorScheme="blue" borderRadius="full">
               <TagLabel>{userData?.login}</TagLabel>
             </Tag>
           </Link>
