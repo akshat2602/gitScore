@@ -4,21 +4,15 @@ import Head from "next/head";
 import { Box, Grid, GridItem, Text, Image, Link } from "@chakra-ui/react";
 import Logo from "../components/utils/Logo";
 import { SwitchThemeButton } from "../components/utils/SwitchTheme";
+import Layout from "../components/Layout";
 
 const custom404page: NextPage = () => {
   return (
     <Box bg="dark.700" minH={"60.5rem"}>
-      <Head>
-        <title>GitScore</title>
-        <meta
-          name="description"
-          content="A web app that scores your GitHub Profile"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Layout />
       <Box>
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-          <GridItem w="100%" h="125" />
+          <GridItem w="100%" h="75" />
         </Grid>
       </Box>
       <Box>

@@ -1,52 +1,34 @@
 import type { NextPage } from "next";
-import { useState } from "react";
-import Head from "next/head";
-import {
-  Box,
-  Grid,
-  GridItem,
-  Text,
-  Input,
-  Button,
-  Flex,
-  Link,
-} from "@chakra-ui/react";
-import Logo from "../../components/utils/Logo";
+import { useEffect, useState } from "react";
+import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { SwitchThemeButton } from "../../components/utils/SwitchTheme";
+import Layout from "../../components/Layout";
 
-const Home: NextPage = () => {
-  const [value, setValue] = useState<string>("");
+const StatPage: NextPage = () => {
   const [userData, setUserData] = useState<object>({});
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
 
-  // const searchGithubUser = () => {
-  // https://api.github.com/search/users\?q\=akshat\&per_page\=5
-  // };
+  const router = useRouter();
+  const { id } = router.query;
 
-  const onClickSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // https://api.github.com/users/akshat2602/repos
-    // var url: string = `https://api.github.com/users/${value}/repos`;
-    // var res: object = await (await fetch(url)).json();
-    // console.log(res);
-  };
+  useEffect(() => {
+    if (id !== undefined) {
+      var url: string = `https://api.github.com/users/${id}/repos`;
+      fetch(url)
+        .then((res) =>
+          res.json().then((res: object) => {
+            setUserData(res);
+          })
+        )
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [id]);
 
   return (
     <Box bg="dark.700" minH={"60.5rem"}>
-      <Head>
-        <title>GitScore</title>
-        <meta
-          name="description"
-          content="A web app that scores your GitHub Profile"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Box>
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-          <GridItem w="100%" h="40" />
-        </Grid>
-      </Box>
+      <Layout />
       <Box>
         <Grid templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={2} />
@@ -74,4 +56,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default StatPage;
