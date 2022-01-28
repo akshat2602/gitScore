@@ -27,23 +27,18 @@ const StatPage: NextPage = () => {
   }, [id]);
 
   return (
-    <Box bg="dark.700" minH={"60.5rem"}>
+    <Box bg="dark.700">
       <Layout />
-      <Box>
+      <Box marginTop={"5%"}>
         <Grid templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={2} />
           <GridItem colSpan={8}>
-            <Text fontSize="3xl" align={"center"}>
-              Hello!
-            </Text>
+            test
           </GridItem>
           <GridItem colSpan={2} />
         </Grid>
       </Box>
-      <Box>
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-          <GridItem w="100%" h="50" />
-        </Grid>
+      <Box marginTop={"2%"}>
         <Grid templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={3} />
           <GridItem colSpan={6} align={"center"}>

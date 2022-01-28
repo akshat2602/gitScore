@@ -13,11 +13,6 @@ const Layout: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box>
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-          <GridItem w="100%" h="50" />
-        </Grid>
-      </Box>
     </Box>
   );
 };

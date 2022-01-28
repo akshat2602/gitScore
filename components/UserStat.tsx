@@ -11,7 +11,7 @@ export const UserStat = () => {
       <Avatar
         size="2xl"
         name={"test"}
-        src="https://bit.ly/sage-adebayo"
+        src={""}
       />{" "}
     </Box>
   );

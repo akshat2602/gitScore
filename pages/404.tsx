@@ -14,14 +14,9 @@ import Layout from "../components/Layout";
 
 const custom404page: NextPage = () => {
   return (
-    <Box bg="dark.700" minH={"60.5rem"}>
+    <Box bg="dark.700">
       <Layout />
-      <Box>
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-          <GridItem w="100%" h="75" />
-        </Grid>
-      </Box>
-      <Box>
+      <Box marginTop={"5%"}>
         <Grid templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={2} />
           <GridItem colSpan={8}>
@@ -40,10 +35,7 @@ const custom404page: NextPage = () => {
           <GridItem colSpan={2} />
         </Grid>
       </Box>
-      <Box>
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-          <GridItem w="100%" h="50" />
-        </Grid>
+      <Box marginTop={"2%"}>
         <Grid templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={3} />
           <GridItem colSpan={6} align={"center"}>
