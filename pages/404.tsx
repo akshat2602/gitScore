@@ -1,8 +1,14 @@
 import type { NextPage } from "next";
-import { useState } from "react";
-import Head from "next/head";
-import { Box, Grid, GridItem, Text, Image, Link } from "@chakra-ui/react";
-import Logo from "../components/utils/Logo";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Text,
+  Image,
+  Link,
+  Center,
+  VStack,
+} from "@chakra-ui/react";
 import { SwitchThemeButton } from "../components/utils/SwitchTheme";
 import Layout from "../components/Layout";
 
@@ -19,7 +25,14 @@ const custom404page: NextPage = () => {
         <Grid templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={2} />
           <GridItem colSpan={8}>
-            <Image src={"https://http.cat/404"} alt="404 - Page Not Found" />
+            <Center>
+              <VStack>
+                <Image
+                  src={"https://http.cat/404"}
+                  alt="404 - Page Not Found"
+                />
+              </VStack>
+            </Center>
             <Text fontSize="3xl" align={"center"} color={"teal.500"}>
               <Link href="/">Return To Home</Link>
             </Text>
