@@ -38,6 +38,7 @@ type UnionType = [GitHubResponse] & GitHubErrorInterface;
 const StatPage: NextPage = () => {
   const [userData, setUserData] = useState<[GitHubResponse] | []>([]);
   const [isError, setIsError] = useState<true | false>(false);
+  const [resStatus, setResStatus] = useState<number>(200);
 
   const router = useRouter();
   const { id } = router.query;
@@ -46,7 +47,10 @@ const StatPage: NextPage = () => {
     if (id !== undefined) {
       let url: string = `https://api.github.com/users/${id}/repos`;
       fetch(url)
-        .then((res) => res.json())
+        .then((res) => {
+          setResStatus(res.status);
+          return res.json();
+        })
         .then((res: UnionType) => {
           if (res?.message) {
             setIsError(true);
@@ -86,7 +90,7 @@ const StatPage: NextPage = () => {
               </Text>
               <Center>
                 <Image
-                  src={"https://http.cat/404"}
+                  src={`https://http.cat/${resStatus}`}
                   alt="404 - Page Not Found"
                 />
               </Center>
