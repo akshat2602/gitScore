@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { SwitchThemeButton } from "../../components/utils/SwitchTheme";
 import Layout from "../../components/Layout";

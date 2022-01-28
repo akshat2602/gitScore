@@ -4,7 +4,6 @@ import {
   Box,
   Grid,
   GridItem,
-  Text,
   Input,
   Button,
   Flex,
@@ -38,15 +37,12 @@ const Home: NextPage = () => {
           <GridItem colSpan={2} />
           <GridItem colSpan={8}>
             <Logo />
-            <Text fontSize="3xl" align={"center"}>
-              Get stats for your GitHub profile!
-            </Text>
           </GridItem>
           <GridItem colSpan={2} />
         </Grid>
       </Box>
       <Box>
-        <Grid templateColumns={"repeat(12,1fr)"}>
+        <Grid marginTop={"1%"} templateColumns={"repeat(12,1fr)"}>
           <GridItem colSpan={3} />
           <GridItem colSpan={6}>
             <Flex>

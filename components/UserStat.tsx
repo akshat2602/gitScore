@@ -10,6 +10,8 @@ import {
   StatGroup,
   Tag,
   TagLabel,
+  Link,
+  Text,
 } from "@chakra-ui/react";
 
 interface UserStatProps {
@@ -58,12 +60,15 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
           />
           <br />
           <br />
-          <Tag size="lg" colorScheme="pink" borderRadius="full">
-            <TagLabel>{userData?.name}</TagLabel>
-          </Tag>
+          <Text fontSize={"2xl"}>{userData?.name}</Text>
+          <Link href={userData?.html_url} isExternal>
+            <Tag size="lg" colorScheme="pink" borderRadius="full">
+              <TagLabel>{userData?.login}</TagLabel>
+            </Tag>
+          </Link>
           <StatGroup marginTop={"1%"}>
             <Stat>
-              <StatLabel>Repos</StatLabel>
+              <StatLabel>Repositories</StatLabel>
               <StatNumber>{userData?.public_repos}</StatNumber>
             </Stat>
 
