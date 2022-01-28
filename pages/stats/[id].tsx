@@ -13,8 +13,9 @@ import { useRouter } from "next/router";
 import { SwitchThemeButton } from "../../components/utils/SwitchTheme";
 import Layout from "../../components/Layout";
 import { UserStat } from "../../components/UserStat";
+import { RepoCard } from "../../components/RepoCard";
 
-interface GitHubResponse {
+export interface GitHubResponse {
   id: number;
   name: string;
   owner: {
@@ -70,14 +71,29 @@ const StatPage: NextPage = () => {
     <Box bg="dark.700">
       <Layout />
       {!isError && (
-        <Box marginTop={"3%"}>
-          <Grid templateColumns={"repeat(12,1fr)"}>
-            <GridItem colSpan={3} />
-            <GridItem colSpan={6}>
-              <UserStat user={userData[0]?.owner.login} />
-            </GridItem>
-            <GridItem colSpan={3} />
-          </Grid>
+        <Box>
+          <Box marginTop={"3%"}>
+            <Grid templateColumns={"repeat(12,1fr)"}>
+              <GridItem colSpan={3} />
+              <GridItem colSpan={6}>
+                <UserStat user={userData[0]?.owner.login} />
+              </GridItem>
+              <GridItem colSpan={3} />
+            </Grid>
+          </Box>
+          <Box marginTop={"3%"}>
+            <Grid templateColumns={"repeat(12,1fr)"}>
+              <GridItem colSpan={2} />
+              <GridItem colSpan={8}>
+                {userData.map((data) => {
+                  if (data.language) {
+                    return <RepoCard key={data.id} {...data} />;
+                  }
+                })}
+              </GridItem>
+              <GridItem colSpan={2} />
+            </Grid>
+          </Box>
         </Box>
       )}
       {isError && (

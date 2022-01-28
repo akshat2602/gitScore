@@ -57,6 +57,7 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
             size="2xl"
             name={userData?.login}
             src={userData?.avatar_url}
+            showBorder={true}
           />
           <br />
           <br />
