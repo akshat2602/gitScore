@@ -8,7 +8,7 @@ import Emoji from "react-emoji-render";
 export const RepoCard: React.FC<GitHubResponse> = (props) => {
   return (
     <LinkBox
-      maxW="sm"
+      maxW="md"
       borderWidth="1px"
       borderRadius="lg"
       height={"200px"}
@@ -40,7 +40,11 @@ export const RepoCard: React.FC<GitHubResponse> = (props) => {
             </Box>
             <br />
           </Box>
-          <Box mt="1" fontWeight="semibold">
+          <Box
+            mt="1"
+            fontWeight="semibold"
+            as="h4"
+          >
             {props.description && <Emoji text={`${props?.description}`} />}
           </Box>
         </Box>
