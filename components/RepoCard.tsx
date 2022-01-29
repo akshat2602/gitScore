@@ -3,10 +3,17 @@ import { Box, Badge, Icon, LinkBox, LinkOverlay } from "@chakra-ui/react";
 import { GitHubResponse } from "../pages/stats/[id]";
 import { VscRepoForked } from "react-icons/vsc";
 import { AiFillBook, AiFillStar } from "react-icons/ai";
+import Emoji from "react-emoji-render";
 
 export const RepoCard: React.FC<GitHubResponse> = (props) => {
   return (
-    <LinkBox maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
+    <LinkBox
+      maxW="sm"
+      borderWidth="1px"
+      borderRadius="lg"
+      height={"200px"}
+      overflow="hidden"
+    >
       <LinkOverlay
         href={`https://github.com/${props.owner.login}/${props.name}`}
       >
@@ -27,14 +34,14 @@ export const RepoCard: React.FC<GitHubResponse> = (props) => {
               textTransform="uppercase"
               ml="2"
             >
-              {props.forks} <Icon as={VscRepoForked} /> {props.stargazers_count}{" "}
-              <Icon as={AiFillStar} />
+              {props.stargazers_count} <Icon as={AiFillStar} /> {props.forks}{" "}
+              <Icon as={VscRepoForked} />
               {props.size} kb
             </Box>
             <br />
           </Box>
           <Box mt="1" fontWeight="semibold">
-            {props.description}
+            {props.description && <Emoji text={`${props?.description}`} />}
           </Box>
         </Box>
       </LinkOverlay>

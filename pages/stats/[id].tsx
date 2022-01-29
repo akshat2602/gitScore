@@ -8,7 +8,13 @@ import {
   Link,
   Image,
   Center,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
 } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { SwitchThemeButton } from "../../components/utils/SwitchTheme";
 import Layout from "../../components/Layout";
@@ -42,10 +48,39 @@ type UnionType = [GitHubResponse] & GitHubErrorInterface;
 const StatPage: NextPage = () => {
   const [userData, setUserData] = useState<[GitHubResponse] | []>([]);
   const [isError, setIsError] = useState<true | false>(false);
+  const [activeSortType, setActiveSortType] = useState<string>("Stars");
   const [resStatus, setResStatus] = useState<number>(200);
 
   const router = useRouter();
   const { id } = router.query;
+
+  const sortUserData = (sortType: string) => {
+    if (userData !== []) {
+      let temp = userData.slice();
+      if (sortType === "Stars") {
+        temp.sort((a, b) =>
+          a.stargazers_count > b.stargazers_count
+            ? -1
+            : b.stargazers_count > a.stargazers_count
+            ? 1
+            : 0
+        );
+      } else if (sortType === "Forks") {
+        temp.sort((a, b) =>
+          a.forks > b.forks ? -1 : b.forks > a.forks ? 1 : 0
+        );
+      } else {
+        temp.sort((a, b) => (a.size > b.size ? -1 : b.size > a.size ? 1 : 0));
+      }
+      // @ts-ignore:next-line
+      setUserData(temp);
+      setActiveSortType(sortType);
+    }
+  };
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -60,6 +95,13 @@ const StatPage: NextPage = () => {
             setIsError(true);
             return;
           } else {
+            res.sort((a, b) =>
+              a.stargazers_count > b.stargazers_count
+                ? -1
+                : b.stargazers_count > a.stargazers_count
+                ? 1
+                : 0
+            );
             setUserData(res);
           }
         })
@@ -77,23 +119,65 @@ const StatPage: NextPage = () => {
         <Box>
           <Box marginTop={"3%"}>
             <Grid templateColumns={"repeat(12,1fr)"}>
-              <GridItem colSpan={3} />
-              <GridItem colSpan={6}>
+              <GridItem colSpan={2} />
+              <GridItem colSpan={8}>
                 <UserStat user={userData[0]?.owner.login} />
               </GridItem>
-              <GridItem colSpan={3} />
+              <GridItem colSpan={2} />
+            </Grid>
+          </Box>
+          <Box marginTop={"2%"}>
+            <Grid templateColumns={"repeat(12,1fr)"}>
+              <GridItem colSpan={2} />
+              <GridItem colSpan={8} display={"flex"}>
+                <Text
+                  fontSize="xl"
+                  align={"center"}
+                  marginRight={"1%"}
+                  marginTop={"0.3%"}
+                >
+                  Sort by
+                </Text>
+                <Menu>
+                  {({ isOpen }) => (
+                    <>
+                      <MenuButton
+                        isActive={isOpen}
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                        marginRight={"1%"}
+                      >
+                        {activeSortType}
+                      </MenuButton>
+                      <MenuList>
+                        <MenuItem onClick={() => sortUserData("Stars")}>
+                          Stars
+                        </MenuItem>
+                        <MenuItem onClick={() => sortUserData("Forks")}>
+                          Forks
+                        </MenuItem>
+                        <MenuItem onClick={() => sortUserData("Size")}>
+                          Size
+                        </MenuItem>
+                      </MenuList>
+                    </>
+                  )}
+                </Menu>
+                <SwitchThemeButton />
+              </GridItem>
+              <GridItem colSpan={2} />
             </Grid>
           </Box>
           <Box marginTop={"3%"}>
             <Grid templateColumns={"repeat(12,1fr)"}>
               <GridItem colSpan={2} />
-              <GridItem colSpan={8}>
-                {userData.map((data) => {
-                  if (data.language) {
-                    return <RepoCard key={data.id} {...data} />;
-                  }
-                })}
-              </GridItem>
+              {userData.slice(0, 4).map((data) => {
+                return (
+                  <GridItem key={data.name} colSpan={2} marginRight={"3%"}>
+                    <RepoCard {...data} />
+                  </GridItem>
+                );
+              })}
               <GridItem colSpan={2} />
             </Grid>
           </Box>
@@ -102,8 +186,8 @@ const StatPage: NextPage = () => {
       {isError && (
         <Box marginTop={"6%"}>
           <Grid templateColumns={"repeat(12,1fr)"}>
-            <GridItem colSpan={3} />
-            <GridItem colSpan={6}>
+            <GridItem colSpan={2} />
+            <GridItem colSpan={8}>
               <Text fontSize="3xl" align={"center"}>
                 User not Found!
               </Text>
@@ -117,19 +201,10 @@ const StatPage: NextPage = () => {
                 <Link href="/">Return To Home</Link>
               </Text>
             </GridItem>
-            <GridItem colSpan={3} />
+            <GridItem colSpan={2} />
           </Grid>
         </Box>
       )}
-      <Box marginTop={"2%"}>
-        <Grid templateColumns={"repeat(12,1fr)"}>
-          <GridItem colSpan={3} />
-          <GridItem colSpan={6} align={"center"}>
-            <SwitchThemeButton />
-          </GridItem>
-          <GridItem colSpan={3} />
-        </Grid>
-      </Box>
     </Box>
   );
 };

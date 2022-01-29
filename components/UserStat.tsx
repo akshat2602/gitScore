@@ -48,7 +48,7 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
       fetch(url)
         .then((res) =>
           res.json().then((res: GitHubResponseInterface) => {
-            var timestamp = Date.parse(res.created_at);
+            let timestamp = Date.parse(res.created_at);
             const created = new Date(timestamp);
             setCreatedAt(new Date(created.toDateString()));
             setUserData(res);
@@ -62,8 +62,8 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
   return (
     <Box textAlign={"center"}>
       <Grid templateColumns={"repeat(12,1fr)"}>
-        <GridItem colSpan={1} />
-        <GridItem colSpan={9}>
+        <GridItem colSpan={2} />
+        <GridItem colSpan={8}>
           <Avatar
             size="2xl"
             name={userData?.login}
@@ -88,7 +88,6 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
               </Link>
               <StatNumber>{userData?.public_repos}</StatNumber>
             </Stat>
-
             <Stat>
               <Link
                 href={`https://github.com/${userData?.login}?tab=followers`}
@@ -98,7 +97,6 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
               </Link>
               <StatNumber>{userData?.followers}</StatNumber>
             </Stat>
-
             <Stat>
               <Link
                 href={`https://github.com/${userData?.login}?tab=following`}
@@ -106,7 +104,6 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
               >
                 <StatLabel>Following</StatLabel>
               </Link>
-
               <StatNumber>{userData?.following}</StatNumber>
             </Stat>
           </StatGroup>
@@ -139,7 +136,7 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
             </Tag>
           )}
         </GridItem>
-        <GridItem colSpan={1} />
+        <GridItem colSpan={2} />
       </Grid>
     </Box>
   );
