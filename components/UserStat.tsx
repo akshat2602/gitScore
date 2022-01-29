@@ -69,17 +69,33 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
           </Link>
           <StatGroup marginTop={"1%"}>
             <Stat>
-              <StatLabel>Repositories</StatLabel>
+              <Link
+                href={`https://github.com/${userData?.login}?tab=repositories`}
+                isExternal
+              >
+                <StatLabel>Repositories</StatLabel>
+              </Link>
               <StatNumber>{userData?.public_repos}</StatNumber>
             </Stat>
 
             <Stat>
-              <StatLabel>Followers</StatLabel>
+              <Link
+                href={`https://github.com/${userData?.login}?tab=followers`}
+                isExternal
+              >
+                <StatLabel>Followers</StatLabel>
+              </Link>
               <StatNumber>{userData?.followers}</StatNumber>
             </Stat>
 
             <Stat>
-              <StatLabel>Following</StatLabel>
+              <Link
+                href={`https://github.com/${userData?.login}?tab=following`}
+                isExternal
+              >
+                <StatLabel>Following</StatLabel>
+              </Link>
+
               <StatNumber>{userData?.following}</StatNumber>
             </Stat>
           </StatGroup>
