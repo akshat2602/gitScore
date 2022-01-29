@@ -12,7 +12,11 @@ import {
   TagLabel,
   Link,
   Text,
+  TagLeftIcon,
 } from "@chakra-ui/react";
+import { RiSuitcaseLine } from "react-icons/ri";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { AiOutlineCalendar } from "react-icons/ai";
 
 interface UserStatProps {
   user: string | undefined;
@@ -27,12 +31,16 @@ interface GitHubResponseInterface {
   public_repos: number;
   followers: number;
   following: number;
+  company: string;
+  location: string;
+  created_at: Date;
 }
 
 export const UserStat: React.FC<UserStatProps> = ({ user }) => {
   const [userData, setUserData] = useState<GitHubResponseInterface | undefined>(
     undefined
   );
+  const [createdAt, setCreatedAt] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
     if (user !== undefined) {
@@ -40,6 +48,8 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
       fetch(url)
         .then((res) =>
           res.json().then((res: GitHubResponseInterface) => {
+            // const created_at = new Date(res.created_at.toDateString());
+            // setCreatedAt(created_at);
             setUserData(res);
           })
         )
@@ -51,8 +61,8 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
   return (
     <Box textAlign={"center"}>
       <Grid templateColumns={"repeat(12,1fr)"}>
-        <GridItem colSpan={2} />
-        <GridItem colSpan={8}>
+        <GridItem colSpan={1} />
+        <GridItem colSpan={9}>
           <Avatar
             size="2xl"
             name={userData?.login}
@@ -99,8 +109,36 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
               <StatNumber>{userData?.following}</StatNumber>
             </Stat>
           </StatGroup>
+          {userData?.company && (
+            <Tag size={"lg"} variant="outline" colorScheme="cyan">
+              <TagLeftIcon boxSize="12px" as={RiSuitcaseLine} />
+              <TagLabel>{userData?.company}</TagLabel>
+            </Tag>
+          )}
+          {userData?.location && (
+            <Tag
+              size={"lg"}
+              marginLeft={"1%"}
+              variant="outline"
+              colorScheme="cyan"
+            >
+              <TagLeftIcon boxSize="12px" as={FaMapMarkerAlt} />
+              <TagLabel>{userData?.location}</TagLabel>
+            </Tag>
+          )}
+          {userData?.created_at && (
+            <Tag
+              size={"lg"}
+              marginLeft={"1%"}
+              variant="outline"
+              colorScheme="cyan"
+            >
+              <TagLeftIcon boxSize="12px" as={AiOutlineCalendar} />
+              <TagLabel>Joined at {createdAt?.toUTCString()}</TagLabel>
+            </Tag>
+          )}
         </GridItem>
-        <GridItem colSpan={2} />
+        <GridItem colSpan={1} />
       </Grid>
     </Box>
   );

@@ -20,6 +20,9 @@ export interface GitHubResponse {
   name: string;
   owner: {
     login: string;
+    company: string;
+    location: string;
+    created_at: Date;
   };
   html_url: string;
   description: string;
