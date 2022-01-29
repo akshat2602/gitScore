@@ -33,7 +33,7 @@ interface GitHubResponseInterface {
   following: number;
   company: string;
   location: string;
-  created_at: Date;
+  created_at: string;
 }
 
 export const UserStat: React.FC<UserStatProps> = ({ user }) => {
@@ -48,8 +48,9 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
       fetch(url)
         .then((res) =>
           res.json().then((res: GitHubResponseInterface) => {
-            // const created_at = new Date(res.created_at.toDateString());
-            // setCreatedAt(created_at);
+            var timestamp = Date.parse(res.created_at);
+            const created = new Date(timestamp);
+            setCreatedAt(new Date(created.toDateString()));
             setUserData(res);
           })
         )
@@ -134,7 +135,7 @@ export const UserStat: React.FC<UserStatProps> = ({ user }) => {
               colorScheme="cyan"
             >
               <TagLeftIcon boxSize="12px" as={AiOutlineCalendar} />
-              <TagLabel>Joined at {createdAt?.toUTCString()}</TagLabel>
+              <TagLabel>Joined at {createdAt?.toDateString()}</TagLabel>
             </Tag>
           )}
         </GridItem>
